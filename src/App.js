@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import { moviesData } from "./data";
 import MovieList from "./MovieList";
 import Filter from "./Filter";
-import AddMovie from "./AddMovie";
+import AddMovieModal from "./AddMovieModal";
 import "./App.css";
-
-
 
 function App() {
   const [movies, setMovies] = useState(moviesData);
   const [titleFilter, setTitleFilter] = useState("");
   const [rateFilter, setRateFilter] = useState(0);
+
+  // 👇 state pour ouvrir / fermer le modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filteredMovies = movies.filter(
     (movie) =>
@@ -20,6 +21,7 @@ function App() {
 
   const addMovie = (newMovie) => {
     setMovies([...movies, { ...newMovie, id: movies.length + 1 }]);
+    setIsModalOpen(false); // 👈 fermer le modal après ajout
   };
 
   return (
@@ -31,9 +33,20 @@ function App() {
         setRateFilter={setRateFilter}
       />
 
-      <AddMovie addMovie={addMovie} />
+      {/* Bouton ouverture modal */}
+      <button className="open-modal-btn" onClick={() => setIsModalOpen(true)}>
+        + Add Movie
+      </button>
 
       <MovieList movies={filteredMovies} />
+
+      {/* Modal */}
+      {isModalOpen && (
+        <AddMovieModal
+          addMovie={addMovie}
+          closeModal={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

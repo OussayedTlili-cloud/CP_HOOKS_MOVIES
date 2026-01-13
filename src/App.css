@@ -137,3 +137,12 @@ body {
     width: 100%;
   }
 }
+.stars {
+  display: flex;
+  gap: 4px; /* espace entre les étoiles */
+}
+.stars {
+  display: flex;
+  gap: 1px;       /* 👈 réduit l’espace entre les étoiles */
+  align-items: center;
+}
